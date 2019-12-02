@@ -1,0 +1,24 @@
+on: push
+name: noTest, Build and Release apk
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      - submodules: true # 'recursive' 'true' or 'false'
+          token: ${{ secrets.GitHub_PAT }}
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '1.9.1+hotfix.6'
+#     - run: flutter upgrade
+    - run: flutter pub get
+#    - run: flutter build apk --debug --split-per-abi
+    - run: flutter build apk 
+    - name: Create a Release APK
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "build/app/outputs/apk/debug/*.apk"
