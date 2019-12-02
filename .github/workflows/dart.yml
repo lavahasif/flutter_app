@@ -6,8 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-      - submodules: true # 'recursive' 'true' or 'false'
-          token: ${{ secrets.GitHub_PAT }}
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
